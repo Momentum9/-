@@ -2,7 +2,7 @@
 
 [toc]
 
-## Logistic回归
+## $Logistic$回归
 
 $Logistic$回归是一种常见的用于处理**二分类问题**的线性分类模型。
 > 所谓线性分类模型：决策边界为线性超平面
@@ -26,20 +26,47 @@ $$
 
 ==**$Logistic$回归采用交叉熵$(BCE\ loss)$作为损失函数，并使用梯度下降法对参数进行优化**==
 
-**最大似然估计论证**：
-已知：
+#### 最大似然估计角度解释
+
+> 似然函数$L(\theta)$是描述不同$\theta$，出现这个样本点$\overrightarrow{y}|x$的概率。故要求使$L(\theta)$最大的$\theta$(即拟合参数$\theta$的过程)
+
+![图 1](../images/d0a04c0daa0bab5e50b211c913ca80f5967955a64b1dd3f283d5d849f3e2159b.png)  
+
+---
+
+#### 交叉熵角度解释
+
+KL散度是衡量两个概率分布的差异
+
+**对于$Logistic$回归，假设真实的$label$概率分布为$P(x)$,模型预测的为$Q(x)$，那么就可以用KL散度衡量预测值与真实值概率模型之间的差异**；
+
+KL散度公式：
+
 $$
-p(y=1|x;w) = \hat{y} \\
-p(y=0|x;w) = 1 - \hat{y}
+D_{KL}(P||Q) = \sum_{i=1}^m p_i((-logq_i) - (-logp_i))\\
+=\sum_{i=1}^m p_i(-logq_i) - \sum_{i=1}^m p_i(-logp_i)
+= H(P,Q) - H(P)
 $$
 
-合并为：
+然后$H(P)$(真实值的熵)为固定值，**所以$H(P,Q)$交叉熵越小，KL散度越大，预测值与真实值之间差异越大，故选取交叉熵作为$logistic$回归的损失函数**。
+
+交叉熵公式：
+
 $$
-p(y|x;w) = \hat{y}^y(1-\hat{y})^{1-y}
+H(P,Q) = -\sum_{i=1}^m p_i\ logq_i
 $$
 
-对其求最大似然函数：
-取对数后得到**交叉熵**损失函数$BCEloss$：
+$logistic$回归中$m=2$，得到**二元交叉熵**：
+$$
+H(P,Q) = -( p_1(logq_1) + p_2(logq_2) )\\
+ =  -( p_1(logq_1) + (1-p_1)(log(1-q_2)))\\
+ = -(ylog(h_\theta (x)) + (1-y)log(1-h_\theta (x)))
+$$
+
+---
+
+综上：
+**Logistic交叉熵**损失函数如下$BCEloss$：
 $$
 损失函数 loss = -(ylog(\hat{y}) + (1-y)log(1-\hat{y}))
 $$
@@ -57,7 +84,7 @@ $$
 w = w -\alpha \frac{\partial cost}{\partial w}
 $$
 
-## Softmax回归
+## $Softmax$回归
 
 $Softmax$回归又称多项/类的$Logistic$回归，是$Logistic$回归在多分类问题上的推广。
 
