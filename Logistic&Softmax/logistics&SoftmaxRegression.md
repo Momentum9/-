@@ -114,6 +114,15 @@ loss(y, \hat{y}) = -\sum_{i=1}^C y_i\ log\hat{y_i} = -log\ \hat{y_y}
 $$
 > 第二个等号的条件为对$y$进行$one-hot$编码，一位为1，其他位为0，故可去掉$\sum$以简化。
 
-### $Softmax$的损失函数是什么？如何拟合$Softmax$的参数w？
+**图解：**
 
-$Softmax$回归使用交叉熵损失函数学习最优的参数矩阵$W$
+首先经过softmax函数使满足概率分布：
+![图 1](../images/d0a125ce8e21e3dc1c18f841c1ff508752386560db84f82039fa75218cfd2fd2.png)  
+
+损失函数：
+![图 2](../images/55092f0ba22acad47add7934e7f1423153239bb2bd3502e6505d15dbe0f729cc.png)  
+
+也可以直接用个整的：
+![图 3](../images/b04440bced58debf5eb7447af1f25d624e664587a89fa2e4dd2761982d92f402.png)  
+
+![图 4](../images/e7be92407ab02dca609ae2cb04b45dfe99cba51616c86cc85a00179d607d2aab.png)  
